@@ -35,10 +35,6 @@ function verifyToken(req, res, next) {
   }
 }
 
-console.log(verifyToken);
-const secret = crypto.randomBytes(32).toString("base64");
-console.log(secret);
-
 const uri = process.env.MONGODB_URI;
 
 const client = new MongoClient(uri, {
@@ -56,7 +52,6 @@ async function run() {
     const userCollection = iLearnDB.collection("userCollection");
     const courseCollection = iLearnDB.collection("courseCollection");
 
-    // user
     app.post("/user", async (req, res) => {
       const user = req.body;
       const token = createToken(user);
@@ -101,7 +96,6 @@ async function run() {
       res.send(result);
     });
 
-    //course
     app.get("/course", async (req, res) => {
       const result = await courseCollection.find().toArray();
       res.send(result);
